@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">zuno zadarmo</string>
+    <string name="app_name">Zuno zadarmo</string>
     <string name="nr_payments_made">You have made %1$s since %2$s totalling:</string>
     <string name="last_message">Last message:</string>
     <plurals name="nr_payments">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">zuno zadarmo</string>
+    <string name="app_name">Zuno zadarmo</string>
     <string name="nr_payments_made">Od %2$s ste spravili %1$s s celkovou sumou:</string>
     <string name="last_message">Posledná správa:</string>
     <plurals name="nr_payments">
