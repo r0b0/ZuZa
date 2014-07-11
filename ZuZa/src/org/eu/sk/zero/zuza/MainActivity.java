@@ -1,15 +1,16 @@
 package org.eu.sk.zero.zuza;
 
 import java.util.Calendar;
+
 import android.R.color;
 import android.app.Activity;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -20,33 +21,14 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
 		Log.d(TAG, "onResume");
-		
-		final int ID=0;
-		final int DATE=1;
+		Resources res = getResources();
+		//final int ID=0;
+		//final int DATE=1;
 		final int BODY=2;
 		final String[] projection = new String[] { "_id", "date", "body" };
 		final String selection = "address='ZUNO' and body like '%ste zaplatili%' and date>=?";
@@ -56,7 +38,8 @@ public class MainActivity extends Activity {
 		Cursor cursor = getContentResolver().query(Uri.parse("content://sms/inbox"), projection, 
 				selection, selectionArgs, sortOrder);
 		
-		Log.d(TAG, "cursor.count: " + cursor.getCount());
+		int count=cursor.getCount();
+		Log.d(TAG, "cursor.count: " + count);
 		
 		float totalAmount=0;
 		String lastMsg="";
@@ -66,27 +49,30 @@ public class MainActivity extends Activity {
 		};
 		
 		TextView t=(TextView)findViewById(R.id.introText);
-		t.setText(cursor.getCount() + " card messages from zuno since " + timestampToString(getStartOfMonth()) + " totalling:");
+		//t.setText(cursor.getCount() + " card messages from zuno since " + timestampToString(getStartOfMonth()) + " totalling:");
+		t.setText(String.format(res.getString(R.string.nr_payments_made), 
+				res.getQuantityString(R.plurals.nr_payments, count, count), 
+				timestampToString(getStartOfMonth())));
 		
 		t=(TextView)findViewById(R.id.totalAmountText);
-		t.setText(totalAmount + "EUR");
+		t.setText(totalAmount + "€");
 		if(totalAmount>100.0) 
-			t.setBackgroundColor(getResources().getColor(color.holo_green_light));
+			t.setBackgroundColor(res.getColor(color.holo_green_light));
 		else
-			t.setBackgroundColor(getResources().getColor(color.holo_red_light));
+			t.setBackgroundColor(res.getColor(color.holo_red_light));
 		
-		if(cursor.getCount()>0) {
+		if(count>0) {
 			t=(TextView)findViewById(R.id.lastMsgTextCaption);
-			t.setText("Last message:");
-			t.setVisibility(1);
+			t.setText(res.getText(R.string.last_message));
+			t.setVisibility(View.VISIBLE);
 			t=(TextView)findViewById(R.id.lastMsgText);
 			t.setText(lastMsg);
-			t.setVisibility(1);
+			t.setVisibility(View.VISIBLE);
 		} else {
 			t=(TextView)findViewById(R.id.lastMsgTextCaption);
-			t.setVisibility(0);
+			t.setVisibility(View.INVISIBLE);
 			t=(TextView)findViewById(R.id.lastMsgText);
-			t.setVisibility(0);
+			t.setVisibility(View.INVISIBLE);
 		}
 	}
 	

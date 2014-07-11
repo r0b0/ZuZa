@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">zuno zadarmo</string>
+    <string name="nr_payments_made">Od %2$s ste spravili %1$s s celkovou sumou:</string>
+    <string name="last_message">Posledná správa:</string>
+    <plurals name="nr_payments">
+        <item quantity="zero">0 platieb</item>
+        <item quantity="one">1 platbu</item>
+        <item quantity="few">%d platby</item>
+        <item quantity="many">%d platieb</item>
+        <item quantity="other">%d platieb</item>
+    </plurals>
+
+</resources>

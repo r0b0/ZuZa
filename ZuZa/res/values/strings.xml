@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ZuZa</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">zuno zadarmo</string>
+    <string name="nr_payments_made">You have made %1$s since %2$s totalling:</string>
+    <string name="last_message">Last message:</string>
+    <plurals name="nr_payments">
+        <item quantity="zero">0 payments</item>
+        <item quantity="one">1 payment</item>
+        <item quantity="many">%d payments</item>
+        <item quantity="other">%d payments</item>
+    </plurals>
 
 </resources>
