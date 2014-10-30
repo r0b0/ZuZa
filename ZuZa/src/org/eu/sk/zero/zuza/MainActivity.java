@@ -1,5 +1,6 @@
 package org.eu.sk.zero.zuza;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import android.R.color;
@@ -39,7 +40,7 @@ public class MainActivity extends Activity {
 				selection, selectionArgs, sortOrder);
 		
 		int count=cursor.getCount();
-		Log.d(TAG, "cursor.count: " + count);
+		//Log.d(TAG, "cursor.count: " + count);
 		
 		float totalAmount=0;
 		String lastMsg="";
@@ -49,13 +50,14 @@ public class MainActivity extends Activity {
 		};
 		
 		TextView t=(TextView)findViewById(R.id.introText);
-		//t.setText(cursor.getCount() + " card messages from zuno since " + timestampToString(getStartOfMonth()) + " totalling:");
 		t.setText(String.format(res.getString(R.string.nr_payments_made), 
 				res.getQuantityString(R.plurals.nr_payments, count, count), 
 				timestampToString(getStartOfMonth())));
 		
 		t=(TextView)findViewById(R.id.totalAmountText);
-		t.setText(totalAmount + "€");
+		DecimalFormat format=new DecimalFormat("#,##0.00");
+		t.setText(format.format(totalAmount) + "\u20AC");
+		
 		if(totalAmount>100.0) 
 			t.setBackgroundColor(res.getColor(color.holo_green_light));
 		else
@@ -92,7 +94,7 @@ public class MainActivity extends Activity {
 	private float readAmountFromMessage(String message) {
 		try {
 			String line1 = message.split("\n")[1];
-			String amount = line1.replace(" EUR.", "").replace(",", ".").replace(" ", "");
+			String amount = line1.replace("EUR", "").replace(".", "").replace(",", ".").replace(" ", "");
 			
 			return Float.parseFloat(amount);
 		} catch(Exception e) {

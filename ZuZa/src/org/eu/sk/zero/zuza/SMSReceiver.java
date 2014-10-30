@@ -18,16 +18,16 @@ public class SMSReceiver extends BroadcastReceiver{
 		for (int i = 0; i < pdusObj.length; i++) {
 			SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i]);
 			
-			if(currentMessage.getOriginatingAddress().equals("ZUNO") &&
+			Log.d(TAG, "getOriginatingAddress: " + currentMessage.getOriginatingAddress());
+			Log.d(TAG, "getMessageBody: " + currentMessage.getMessageBody());
+			
+			if(/*currentMessage.getOriginatingAddress().equals("ZUNO") && */ // TODO
 					currentMessage.getMessageBody().contains("ste zaplatili")) {
 				
 				Log.d(TAG, "zuno payment message, starting the main activity");
 				Intent zuzaIntent=new Intent(context, MainActivity.class);
 				zuzaIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				context.startActivity(zuzaIntent);
-			} else {
-				Log.d(TAG, "getOriginatingAddress: " + currentMessage.getOriginatingAddress());
-				Log.d(TAG, "getMessageBody: " + currentMessage.getMessageBody());
 			}
 		}
 	}
